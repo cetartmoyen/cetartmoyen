@@ -200,6 +200,10 @@ img { -webkit-user-drag: none; user-select: none; -webkit-user-select: none; -we
 .about h1 { font-family: var(--f-mono); font-weight: 400; font-size: clamp(1.3rem, 2.6vw, 2rem); line-height: 1.2; margin: 0; letter-spacing: .3em; text-transform: uppercase; }
 .about .txt { max-width: 62ch; }
 .about .txt p:first-child { margin-top: 0; font-size: var(--s-lg); line-height: 1.45; }
+.quote { margin: 0 0 2rem; padding-left: 1.4rem; border-left: 1px solid var(--line); }
+.quote p { margin: 0 0 1rem; font-style: italic; font-weight: 300; font-size: 1.3rem; line-height: 1.55; }
+.quote footer { color: var(--mute); text-transform: none; letter-spacing: .08em; font-size: .78rem; }
+.quote cite { font-style: italic; font-family: var(--f-body); font-size: 1rem; }
 .about dl { display: grid; grid-template-columns: 9rem minmax(0, 1fr); gap: .6rem 1rem; border-top: 1px solid var(--line); padding-top: 1.2rem; margin-top: 2rem; }
 .about dt { color: var(--mute); }
 .about dd { margin: 0; }
@@ -293,12 +297,14 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1r
     <div class="about wrap">
       <h1>À propos</h1>
       <div class="txt">
-        <p>Le titre reprend celui de l'essai de Pierre Bourdieu, <em>Un art moyen</em> (1965), sur les usages sociaux de la photographie. <span class="todo">[Texte de présentation à fournir.]</span></p>
+        <blockquote class="quote">
+          <p>« Alors que tout semble promettre la photographie, activité sans traditions et sans exigences, à l'anarchie de l'improvisation individuelle, rien n'est plus réglé et plus conventionnel que la pratique photographique et les photographies d'amateurs. Les normes qui définissent les occasions et les objets de photographie révèlent la fonction sociale de l'acte et de l'image photographique : éterniser et solenniser les temps forts de la vie collective. Aussi la photographie, rite du culte domestique, par lequel on fabrique des images privées de la vie privée, est-elle une des rares activités qui puisse encore de nos jours enrichir la culture populaire : une esthétique peut s'y exprimer avec ses principes, ses canons et ses lois qui ne sont pas autre chose que l'expression dans le domaine esthétique d'attitudes éthiques. »</p>
+          <footer class="mono">Pierre Bourdieu, <cite>Un art moyen. Essai sur les usages sociaux de la photographie</cite>, 1965</footer>
+        </blockquote>
         <p class="todo">[Biographie, démarche, matériel, expositions.]</p>
         <dl class="mono">
           <dt>Tirages</dt><dd class="todo">[Formats, papier, éditions limitées]</dd>
-          <dt>Contact</dt><dd class="todo">[adresse@exemple.fr]</dd>
-          <dt>Instagram</dt><dd class="todo">[@compte]</dd>
+          <dt>Contact</dt><dd><a href="mailto:cetartmoyen@gmx.com" style="text-transform:none;letter-spacing:.08em">cetartmoyen@gmx.com</a></dd>
         </dl>
       </div>
     </div>
