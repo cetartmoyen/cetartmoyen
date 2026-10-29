@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Cet Art Moyen : photographies. Villes, paysages, rues, visages.">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Cet Art Moyen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poiret+One&family=Tenor+Sans&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap">
+<style>
+/* Mise en page : un studio de portrait, noir profond et clair-obscur ; titres en capitales très espacées ; chaque série a sa « salle » en grand bloc alterné. Le mur reste réglable dans la visionneuse. */
+/* Ancienne note : une galerie. Le mur (fond) change de ton comme une cimaise ; les images portent des cartels d'exposition ; la planche-contact reprend le tirage de laboratoire. */
+:root {
+  --wall: #0a0a0a;        /* noir de studio */
+  --wall-2: #141413;
+  --ink: #f2efe9;         /* blanc baryté */
+  --mute: #8c8880;
+  --line: #262523;
+  --selenium: #b39b80;    /* virage sélénium, accent rare */
+  --grease: #d0402c;      /* crayon gras de labo */
+  --film: #0b0b0a;
+  --film-ink: #d9c9a3;
+  --f-title: "Poiret One", "Futura", "Avenir Next", sans-serif;   /* titre du site : Art déco */
+  --f-display: "Cormorant Garamond", "Garamond", Georgia, serif;
+  --f-body: "Cormorant Garamond", "Garamond", Georgia, serif;
+  --f-mono: "Tenor Sans", "Optima", "Gill Sans", sans-serif;      /* capitales espacées */
+  --s-xs: .72rem; --s-sm: .84rem; --s-md: 1rem; --s-lg: 1.35rem; --s-xl: clamp(1.8rem, 4vw, 3.2rem); --s-xxl: clamp(3rem, 9vw, 8rem);
+  --gutter: max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(16px, env(safe-area-inset-right, 0px));
+  --ease: cubic-bezier(.2,.7,.1,1);
+  color-scheme: dark;
+}
+/* Le site est noir par défaut, quel que soit le thème du visiteur (choix assumé, esprit studio). */
+/* Ton du mur choisi par le visiteur : passe avant le thème */
+:root[data-wall="noir"]  { --wall: #0a0a0a; --wall-2: #141413; --ink: #f2efe9; --mute: #8c8880; --line: #262523; --selenium: #b39b80; --grease: #d0402c; color-scheme: dark; }
+:root[data-wall="gris"]  { --wall: #777674; --wall-2: #6e6d6b; --ink: #0f0f0e; --mute: #2b2a28; --line: #8a8986; --selenium: #2a2118; --grease: #8e1c0e; color-scheme: light; }
+:root[data-wall="blanc"] { --wall: #ecebe6; --wall-2: #e2e0d9; --ink: #161615; --mute: #6c6962; --line: #cfccc3; --selenium: #7c6550; --grease: #c0331f; color-scheme: light; }
+
+html { scroll-behavior: smooth; }
+body { background: var(--wall); color: var(--ink); font-family: var(--f-body); font-size: 1.12rem; font-weight: 400; line-height: 1.6; transition: background-color .6s var(--ease), color .6s var(--ease); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--wall); }
+::selection { background: var(--ink); color: var(--wall); }
+a { color: inherit; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; padding: 0; }
+:focus-visible { outline: 1px solid var(--ink); outline-offset: 3px; }
+.grain { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .07; mix-blend-mode: overlay; }
+.mono { font-family: var(--f-mono); font-size: .68rem; letter-spacing: .24em; text-transform: uppercase; }
+.wrap { padding-left: var(--gutter); padding-right: var(--gutter-r); }
+
+/* En-tête */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 1.5rem; padding-block: 1.1rem; background: color-mix(in srgb, var(--wall) 88%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.mark { grid-column: 2; grid-row: 1; font-family: var(--f-title); font-size: calc(1.8rem * var(--t-scale, 1)); line-height: 1; text-decoration: none; letter-spacing: var(--t-track, .04em); white-space: nowrap; text-align: center; }
+.mark b { font-weight: 400; }
+.nav { grid-column: 1; grid-row: 1; display: flex; gap: 1.6rem; flex-wrap: wrap; }
+.nav a { text-decoration: none; color: var(--mute); transition: color .2s; }
+.nav a:hover, .nav a[aria-current="page"] { color: var(--ink); }
+.walls { display: flex; align-items: center; gap: .45rem; }
+.top .walls { grid-column: 3; grid-row: 1; justify-self: end; }
+.walls span { color: var(--mute); }
+.walls button { width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--mute); position: relative; }
+.walls button[data-w="noir"] { background: #0a0a0a; }
+.walls button[data-w="gris"] { background: #777674; }
+.walls button[data-w="blanc"] { background: #ecebe6; }
+.walls button[aria-pressed="true"]::after { content: ""; position: absolute; inset: -5px; border-radius: 50%; border: 1px solid var(--ink); }
+@media (max-width: 760px) { .top { grid-template-columns: 1fr auto; gap: .7rem 1rem; } .mark { grid-column: 1; text-align: left; } .top .walls { grid-column: 2; } .nav { grid-column: 1 / -1; grid-row: 2; gap: 1.1rem; } .walls span { display: none; } }
+
+/* Vues */
+.view { display: none; }
+.view.on { display: block; animation: enter .7s var(--ease) both; }
+@keyframes enter { from { opacity: .25; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* Révélateur : l'image apparaît comme dans le bain */
+img.dev { filter: brightness(2.2) contrast(.35) grayscale(.3); opacity: .35; transition: filter 1.6s var(--ease), opacity 1s var(--ease); }
+img.dev.ok { filter: none; opacity: 1; }
+/* Protection : pas de glisser-déposer ni de menu « Enregistrer l'image » au toucher long */
+img { -webkit-user-drag: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+
+/* Typo du titre : Art déco (Poiret One), choisie par Phil */
+:root[data-font="poiret"]  { --f-title: "Poiret One", "Futura", sans-serif; --t-scale: .8; --t-track: .04em; --t-lead: .98; }
+
+/* Accueil */
+.hero { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 4rem); align-items: start; padding-block: clamp(2rem, 6vw, 5rem) clamp(2rem, 5vw, 4rem); }
+.title { font-family: var(--f-title); font-weight: 400; font-size: calc(var(--s-xxl) * var(--t-scale, 1)); line-height: var(--t-lead, .95); letter-spacing: var(--t-track, .04em); margin: 0; }
+.title span { display: block; }
+.title .i { padding-left: .9em; }
+.sub { margin: 1.4rem 0 0; color: var(--mute); }
+.title .r { animation: reveal 2.4s var(--ease) both; }
+.title .r:nth-child(2) { animation-delay: .25s; } .title .r:nth-child(3) { animation-delay: .5s; }
+@keyframes reveal { from { color: color-mix(in srgb, var(--ink) 18%, var(--wall)); filter: blur(3px); } to { color: var(--ink); filter: none; } }
+.lede { max-width: 34ch; margin: 1.2rem 0 0; color: var(--mute); font-size: var(--s-lg); line-height: 1.45; font-style: italic; font-weight: 300; }
+.lede em { color: var(--ink); }
+.cover { margin: 0; justify-self: end; width: fit-content; max-width: 100%; }
+.cover button { display: block; width: 100%; }
+.cover img { width: auto; height: auto; max-width: 100%; max-height: 46vh; display: block; }
+.cartel { display: flex; justify-content: space-between; gap: 1rem; padding-top: .6rem; color: var(--mute); }
+.cartel b { color: var(--ink); font-weight: 400; }
+
+.index { margin-top: 1rem; padding-bottom: 5rem; }
+.index h2 { margin: 0; padding-block: 3rem 2rem; text-align: center; color: var(--mute); }
+.index h2::before, .index h2::after { content: ""; display: inline-block; width: 3rem; height: 1px; background: var(--line); vertical-align: middle; margin: 0 1.2rem; }
+.salle { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(1.5rem, 6vw, 6rem); align-items: center; padding-block: clamp(2rem, 5vw, 4.5rem); text-decoration: none; }
+.salle:nth-child(even) { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); }
+.salle:nth-child(even) .ph { order: 2; }
+.salle .ph { overflow: hidden; display: grid; place-items: center; }
+.salle .ph img { width: 100%; max-height: 62vh; object-fit: contain; display: block; transition: transform 1.2s var(--ease); }
+.salle:hover .ph img { transform: scale(1.025); }
+.salle .tx { display: grid; gap: 1rem; justify-items: start; max-width: 30rem; }
+.salle .num { color: var(--mute); }
+.salle .name { font-family: var(--f-mono); font-size: clamp(1.4rem, 2.6vw, 2.1rem); letter-spacing: .3em; text-transform: uppercase; line-height: 1.2; }
+.salle .desc { margin: 0; color: var(--mute); font-style: italic; font-weight: 300; font-size: 1.2rem; }
+.salle .go { padding-bottom: .35rem; border-bottom: 1px solid var(--ink); transition: letter-spacing .5s var(--ease); }
+.salle:hover .go { letter-spacing: .34em; }
+.row-old { display: grid; grid-template-columns: 4rem minmax(0, 1fr) auto; align-items: baseline; gap: 1rem; padding-block: 1.1rem; border-bottom: 1px solid var(--line); text-decoration: none; position: relative; }
+.row .num { color: var(--mute); }
+.row .name { font-family: var(--f-display); font-size: var(--s-xl); line-height: 1; letter-spacing: -.02em; transition: transform .5s var(--ease), font-style .3s; }
+.row:hover .name, .row:focus-visible .name { transform: translateX(.35em); font-style: italic; }
+.row .meta { color: var(--mute); text-align: right; }
+.row .strip { display: none; }
+@media (max-width: 760px) {
+  .hero { grid-template-columns: 1fr; }
+  .salle, .salle:nth-child(even) { grid-template-columns: 1fr; }
+  .salle:nth-child(even) .ph { order: 0; }
+}
+.peek { position: fixed; z-index: 40; left: 0; top: 0; width: 280px; pointer-events: none; opacity: 0; transform: translate(-50%, -50%) scale(.96); transition: opacity .3s, transform .4s var(--ease); }
+.peek.on { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+.peek img { width: 100%; display: block; box-shadow: 0 30px 60px -20px rgba(0,0,0,.6); }
+@media (hover: none), (max-width: 760px) { .peek { display: none; } }
+
+/* Série */
+.s-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1rem 2rem; align-items: end; padding-block: clamp(1.5rem, 4vw, 3rem) 1.5rem; }
+.s-head h1 { font-family: var(--f-mono); font-weight: 400; font-size: clamp(1.3rem, 2.6vw, 2rem); line-height: 1.2; margin: 0; letter-spacing: .3em; text-transform: uppercase; }
+.s-head h1 small { display: block; font-family: var(--f-mono); font-size: var(--s-xs); letter-spacing: .08em; color: var(--mute); margin-bottom: .8rem; text-transform: uppercase; }
+.s-head p { margin: .9rem 0 0; color: var(--mute); max-width: 52ch; }
+.hang { display: flex; gap: .2rem; border: 1px solid var(--line); padding: 3px; }
+.hang button { padding: .35rem .7rem; color: var(--mute); }
+.hang button[aria-pressed="true"] { background: var(--ink); color: var(--wall); }
+
+.rail { display: flex; gap: clamp(2rem, 5vw, 5rem); overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; padding-block: 1rem 1.5rem; scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.rail figure { margin: 0; flex: none; scroll-snap-align: center; }
+.rail figure img { height: min(66vh, 720px); width: auto; display: block; cursor: zoom-in; }
+.rail .wide img { height: min(52vh, 560px); }
+.rail figure:first-child { margin-left: var(--gutter); }
+.rail figure:last-child { margin-right: var(--gutter-r); }
+.rail .end { flex: none; align-self: center; width: min(22rem, 70vw); margin-right: var(--gutter-r); }
+.railbar { display: flex; align-items: center; gap: 1rem; color: var(--mute); padding-bottom: 3rem; }
+.railbar .track { flex: 1; height: 1px; background: var(--line); position: relative; }
+.railbar .track i { position: absolute; left: 0; top: -1px; height: 3px; background: var(--ink); width: 0; transition: width .15s linear; }
+
+.grid { columns: 3 280px; column-gap: clamp(1rem, 2.5vw, 2rem); padding-block: 1rem 4rem; }
+.grid figure { margin: 0 0 clamp(1rem, 2.5vw, 2rem); break-inside: avoid; }
+.grid img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+
+.next { display: block; text-decoration: none; padding-block: 2rem; border-top: 1px solid var(--line); }
+.next .mono { color: var(--mute); }
+.next .n { font-family: var(--f-display); font-style: italic; font-weight: 300; font-size: var(--s-xl); line-height: 1; display: block; margin-top: .4rem; }
+
+@media (max-width: 760px) {
+  .s-head { grid-template-columns: 1fr; }
+  .rail { flex-direction: column; overflow: visible; gap: 2.5rem; padding-left: var(--gutter); padding-right: var(--gutter-r); }
+  .rail figure:first-child, .rail figure:last-child, .rail .end { margin: 0; }
+  .rail figure img, .rail .wide img { height: auto; width: 100%; }
+  .railbar, .hang { display: none; }
+}
+
+/* Triptyques */
+.trips { display: grid; gap: clamp(3rem, 7vw, 6rem); padding-block: 1rem 4rem; }
+.trips figure { margin: 0; }
+.trips img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+
+/* Planche-contact */
+.sheet-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 1rem; padding-block: clamp(1.5rem, 4vw, 3rem) 1.5rem; }
+.sheet-head h1 { font-family: var(--f-mono); font-weight: 400; font-size: clamp(1.3rem, 2.6vw, 2rem); line-height: 1.2; margin: 0; letter-spacing: .3em; text-transform: uppercase; }
+.sheet-head p { margin: .8rem 0 0; color: var(--mute); max-width: 54ch; }
+.sel { display: flex; gap: .6rem; align-items: center; flex-wrap: wrap; }
+.sel button { border: 1px solid var(--line); padding: .45rem .8rem; }
+.sel button[aria-pressed="true"] { border-color: var(--grease); color: var(--grease); }
+.sel output { color: var(--grease); }
+.sheet { background: var(--film); padding: clamp(10px, 2vw, 22px); margin-bottom: 4rem; box-shadow: 0 1px 0 var(--line); }
+.strip35 { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0; position: relative; padding-block: 18px; background:
+  radial-gradient(ellipse 4px 5px at 50% 50%, #2a2926 92%, transparent 100%) 0 4px / 22px 12px repeat-x,
+  radial-gradient(ellipse 4px 5px at 50% 50%, #2a2926 92%, transparent 100%) 0 calc(100% - 4px) / 22px 12px repeat-x, var(--film); }
+.strip35 + .strip35 { margin-top: clamp(8px, 1.5vw, 16px); }
+.frame { position: relative; padding: 0 5px; }
+.frame .pic { aspect-ratio: 3 / 2; display: grid; place-items: center; overflow: hidden; background: #000; cursor: zoom-in; width: 100%; }
+.frame img { max-width: 100%; max-height: 100%; display: block; }
+.frame .edge { position: absolute; top: -15px; left: 6px; font-family: var(--f-mono); font-size: 9px; color: var(--film-ink); letter-spacing: .1em; opacity: .85; }
+.frame .pick { position: absolute; right: 9px; bottom: 5px; z-index: 2; font-family: var(--f-mono); font-size: 10px; letter-spacing: .06em; color: #f1ede4; background: rgba(0,0,0,.55); padding: 2px 6px; opacity: 0; transition: opacity .2s; }
+.frame:hover .pick, .frame .pick:focus-visible, .frame.chosen .pick { opacity: 1; }
+.frame svg.circle { position: absolute; inset: -10% -6%; width: 112%; height: 120%; pointer-events: none; overflow: visible; }
+.frame svg.circle path { fill: none; stroke: var(--grease); stroke-width: 3.2; stroke-linecap: round; stroke-dasharray: 900; stroke-dashoffset: 900; transition: stroke-dashoffset .7s var(--ease); }
+.frame.chosen svg.circle path { stroke-dashoffset: 0; }
+.sheet.only .frame:not(.chosen) .pic { opacity: .12; }
+@media (max-width: 900px) { .strip35 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (hover: none) { .frame .pick { opacity: 1; } }
+
+/* À propos */
+.about { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: clamp(2rem, 6vw, 6rem); padding-block: clamp(2rem, 5vw, 4rem) 5rem; }
+.about h1 { font-family: var(--f-mono); font-weight: 400; font-size: clamp(1.3rem, 2.6vw, 2rem); line-height: 1.2; margin: 0; letter-spacing: .3em; text-transform: uppercase; }
+.about .txt { max-width: 62ch; }
+.about .txt p:first-child { margin-top: 0; font-size: var(--s-lg); line-height: 1.45; }
+.about dl { display: grid; grid-template-columns: 9rem minmax(0, 1fr); gap: .6rem 1rem; border-top: 1px solid var(--line); padding-top: 1.2rem; margin-top: 2rem; }
+.about dt { color: var(--mute); }
+.about dd { margin: 0; }
+.todo { color: var(--selenium); }
+@media (max-width: 760px) { .about { grid-template-columns: 1fr; } .about dl { grid-template-columns: 1fr; } }
+
+footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; padding-block: 1.5rem 2rem; border-top: 1px solid var(--line); color: var(--mute); }
+
+/* Visionneuse */
+.lb { position: fixed; inset: 0; z-index: 100; background: var(--wall); display: grid; grid-template-rows: auto minmax(0, 1fr) auto; padding: calc(env(safe-area-inset-top, 0px) + 12px) var(--gutter-r) calc(env(safe-area-inset-bottom, 0px) + 14px) var(--gutter); transition: background-color .6s var(--ease); }
+.lb[hidden] { display: none !important; }
+.lb-top, .lb-bot { display: flex; align-items: center; gap: 1rem; color: var(--mute); transition: opacity .6s; }
+.lb-top { justify-content: space-between; }
+.lb-top .walls span { display: inline; }
+.lb-stage { position: relative; display: grid; place-items: center; min-height: 0; padding-block: 12px; touch-action: pan-y; }
+.lb-stage img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; box-shadow: 0 40px 80px -40px rgba(0,0,0,.55); }
+.lb-stage .hit { position: absolute; top: 0; bottom: 0; width: 30%; }
+.lb-stage .hit.p { left: 0; cursor: w-resize; } .lb-stage .hit.n { right: 0; cursor: e-resize; }
+.lb-bot { justify-content: space-between; flex-wrap: wrap; }
+.lb-bot .c b { color: var(--ink); font-weight: 500; }
+.lb-bot .keys { display: flex; gap: 1rem; }
+.lb.quiet .lb-top, .lb.quiet .lb-bot { opacity: 0; }
+.lb.quiet { cursor: none; }
+.lb button.t { padding: .3rem .1rem; color: var(--mute); }
+.lb button.t:hover { color: var(--ink); }
+@media (max-width: 760px) { .lb-bot .keys { display: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  img.dev { filter: none; opacity: 1; }
+  html { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+
+<canvas class="grain" aria-hidden="true"></canvas>
+
+<header class="top wrap">
+  <a class="mark" href="#accueil">Cet Art Moyen</a>
+  <nav class="nav mono" aria-label="Navigation principale">
+    <a href="#accueil" data-nav="accueil">Séries</a>
+    <a href="#planche" data-nav="planche">Planche-contact</a>
+    <a href="#apropos" data-nav="apropos">À propos</a>
+  </nav>
+  <div class="walls mono" role="group" aria-label="Ton du mur">
+    <span>Mur</span>
+    <button data-w="noir" aria-pressed="false" title="Mur noir" aria-label="Mur noir"></button>
+    <button data-w="gris" aria-pressed="false" title="Gris neutre 18 %" aria-label="Gris neutre 18 %"></button>
+    <button data-w="blanc" aria-pressed="false" title="Blanc baryté" aria-label="Blanc baryté"></button>
+  </div>
+</header>
+
+<main>
+  <section class="view" id="v-accueil">
+    <div class="hero wrap">
+      <div>
+        <h1 class="title"><span class="r">Cet</span><span class="r">Art</span><span class="r i">Moyen</span></h1>
+        <p class="sub mono">Photographies</p>
+        <p class="lede"><em>Villes en contre-plongée</em>, paysages tenus en silence, rues, visages. Noir et blanc pour l'essentiel, couleur quand elle s'impose.</p>
+      </div>
+      <figure class="cover">
+        <button type="button" data-open="COUV1" aria-label="Agrandir l'image de couverture"><img class="dev" src="img/l/COUV1.webp" width="1600" height="1600" alt="Gratte-ciel de Manhattan sous un ciel strié de nuages, en noir et blanc"></button>
+        <figcaption class="cartel mono"><span><b>N° 01</b> · Verticales</span></figcaption>
+      </figure>
+    </div>
+    <div class="index wrap">
+      <h2 class="mono">Les séries</h2>
+      <div id="rows"></div>
+    </div>
+  </section>
+
+  <section class="view" id="v-serie"></section>
+
+  <section class="view" id="v-planche">
+    <div class="sheet-head wrap">
+      <div>
+        <h1>Planche-contact</h1>
+        <p>Toutes les images, dans l'ordre des séries. Entourez au crayon gras celles que vous retenez : votre sélection reste dans ce navigateur.</p>
+      </div>
+      <div class="sel mono">
+        <output id="selCount">0 retenue</output>
+        <button type="button" id="selOnly" aria-pressed="false">Voir ma sélection</button>
+        <button type="button" id="selClear">Effacer</button>
+      </div>
+    </div>
+    <div class="wrap"><div class="sheet" id="sheet"></div></div>
+  </section>
+
+  <section class="view" id="v-apropos">
+    <div class="about wrap">
+      <h1>À propos</h1>
+      <div class="txt">
+        <p>Le titre reprend celui de l'essai de Pierre Bourdieu, <em>Un art moyen</em> (1965), sur les usages sociaux de la photographie. <span class="todo">[Texte de présentation à fournir.]</span></p>
+        <p class="todo">[Biographie, démarche, matériel, expositions.]</p>
+        <dl class="mono">
+          <dt>Tirages</dt><dd class="todo">[Formats, papier, éditions limitées]</dd>
+          <dt>Contact</dt><dd class="todo">[adresse@exemple.fr]</dd>
+          <dt>Instagram</dt><dd class="todo">[@compte]</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap mono"><span>© Cet Art Moyen</span><span>Toutes les images sont protégées. Reproduction interdite.</span></footer>
+
+<div class="peek" aria-hidden="true"><img alt=""></div>
+
+
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Visionneuse">
+  <div class="lb-top mono">
+    <span id="lbCount">01 / 41</span>
+    <div class="walls" role="group" aria-label="Ton du mur">
+      <span>Mur</span>
+      <button data-w="noir" aria-pressed="false" aria-label="Mur noir" title="Noir (1)"></button>
+      <button data-w="gris" aria-pressed="false" aria-label="Gris neutre 18 %" title="Gris 18 % (2)"></button>
+      <button data-w="blanc" aria-pressed="false" aria-label="Blanc baryté" title="Blanc (3)"></button>
+    </div>
+    <button class="t" type="button" id="lbClose">Fermer ✕</button>
+  </div>
+  <div class="lb-stage" id="lbStage">
+    <img id="lbImg" alt="">
+    <button class="hit p" type="button" aria-label="Image précédente"></button>
+    <button class="hit n" type="button" aria-label="Image suivante"></button>
+  </div>
+  <div class="lb-bot mono">
+    <span class="c" id="lbCartel"></span>
+    <span class="keys"><span>← → naviguer</span><span>1 2 3 mur</span><span>F plein écran</span><span>Échap fermer</span></span>
+  </div>
+</div>
+
+<script>
+(() => {
+  const SERIES = [
+    { id: "verticales", name: "Verticales", desc: "Architecture et ville. Tours, ponts, façades et escaliers vus d'en bas, quand la ligne prend le dessus sur le sujet.",
+      imgs: [["COUV1",1600,1600,"Gratte-ciel de Manhattan sous un ciel strié"],["IM1",1394,2000,"Chaise abandonnée sur un toit en friche, tours en arrière-plan"],["IM3",2000,1394,"Poutres blanches et lumière rasante"],["IM4",2000,1394,"Façade d'acier courbe sous un ciel chargé"],["IM5",2000,1394,"Plaques de métal assemblées, vue rapprochée"],["IM6",2000,1394,"Sous un pont, la ligne des tours au bord de l'eau"],["IM7",2000,1394,"Tour très fine dominant un quartier, ciel d'orage"],["IM8",2000,1394,"Panorama de Manhattan depuis une hauteur"],["IM9",2000,1394,"Escaliers de secours en contre-plongée"],["IM10",2000,1394,"Tour éclairée dans le brouillard, la nuit"],["IM22",1394,2000,"Façade vitrée en diagonale"],["IM38",1394,2000,"Façade aux panneaux bombés, vue en contre-plongée"]] },
+    { id: "silences", name: "Silences", desc: "Paysages et matières. L'eau, la neige, la montagne, une grange sous l'orage.",
+      imgs: [["IM2",2000,2000,"Algues ondulant dans une eau sombre"],["IM11",2000,2000,"Îlot boisé se reflétant dans une eau étale"],["IM12",2000,1394,"Grange en bois devant une chaîne de montagnes"],["IM13",1394,2000,"Étendue de neige, silhouettes au loin, ville dans la brume"],["IM14",2000,1015,"Plateau rocheux et montagnes à contre-jour"]] },
+    { id: "aplats", name: "Aplats", desc: "La couleur traitée en surfaces : un jaune contre un bleu, une rue repeinte, un cuivre et sa patine.",
+      imgs: [["IM15",2000,1394,"Lampadaire contre un mur jaune vif et un ciel bleu"],["IM16",2000,1176,"Rideaux de fer colorés, un passant"],["IM17",2000,1394,"Deux arbres en fleur devant un mur, rue vide"],["IM18",1394,2000,"Mur bleu, panneaux de rue et bouche d'incendie rouge"],["IM20",2000,1394,"Grillage couvert de carreaux peints"],["IM21",1394,2000,"Courbe de cuivre et patine vert-de-gris"]] },
+    { id: "passants", name: "Passants", desc: "Scènes de rue, de métro et de marché. Ceux qui attendent, ceux qui jouent, ceux qui passent.",
+      imgs: [["IM19",2000,1394,"Silhouettes sous une structure de bois, contre-jour"],["IM23",2000,1394,"Trois personnes devant une vitrine la nuit"],["IM24",2000,1394,"Guitariste en concert de rue"],["IM25",2000,1394,"Passagers assis dans une rame de métro"],["IM26",2000,1394,"Comptoir d'un marché couvert"],["IM27",2000,1394,"Foule dans un marché sous une verrière"]] },
+    { id: "visages", name: "Visages", desc: "Portraits faits au fil d'un voyage : enfants, femmes, anciens, dans la lumière dure de la mi-journée.",
+      imgs: [["IM28",1394,2000,"Homme dans l'encadrement d'une échoppe"],["IM29",2000,1400,"Groupe de femmes et d'enfants sous un arbre"],["IM30",1400,2000,"Enfants serrés les uns contre les autres, souriants"],["IM31",1400,2000,"Femme debout dans un paysage d'arbres secs"],["IM32",2000,1400,"Femme et enfants devant un abri"],["IM33",2000,1400,"Groupe d'enfants voilés près des rochers"],["IM34",1400,2000,"Deux jeunes femmes voilées"],["IM35",1400,2000,"Jeune femme et enfants devant une hutte"],["IM36",1400,2000,"Enfant juché sur un âne chargé de bidons"],["IM37",1400,2000,"Vieil homme au turban tenant une canne"]] },
+    { id: "triptyques", name: "Triptyques", desc: "Trois images pensées pour être vues ensemble.", trip: true,
+      imgs: [["TRIP1",2962,1481,"Triptyque : racines enchevêtrées"],["TRIP2",2800,866,"Triptyque : architecture de terre blanchie et ombres"]] }
+  ];
+  const ALL = [];
+  SERIES.forEach((s, si) => s.imgs.forEach(([id, w, h, alt]) => ALL.push({ id, w, h, alt, s, si, n: ALL.length + 1 })));
+  const byId = Object.fromEntries(ALL.map(p => [p.id, p]));
+  const pad = n => String(n).padStart(2, "0");
+  const ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII"];
+  const $ = s => document.querySelector(s);
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch { return d; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
+  };
+  const devImg = (p, size, extra = "") => `<img class="dev" loading="lazy" decoding="async" src="img/${size}/${p.id}.webp" width="${p.w}" height="${p.h}" alt="${p.alt}" data-open="${p.id}" ${extra}>`;
+  const develop = root => root.querySelectorAll("img.dev:not(.ok)").forEach(i => { if (i.complete && i.naturalWidth) i.classList.add("ok"); else i.addEventListener("load", () => i.classList.add("ok"), { once: true }); });
+
+  /* Grain de fond, dessiné une fois */
+  (() => { const c = $(".grain"), x = c.getContext("2d"); c.width = c.height = 220; const d = x.createImageData(220, 220);
+    for (let i = 0; i < d.data.length; i += 4) { const v = Math.random() * 255; d.data[i] = d.data[i+1] = d.data[i+2] = v; d.data[i+3] = 255; }
+    x.putImageData(d, 0, 0); c.style.backgroundImage = `url(${c.toDataURL()})`; c.style.width = "100%"; c.style.height = "100%"; c.width = c.height = 0; })();
+
+  /* Ton du mur */
+  const setWall = w => { if (w) document.documentElement.dataset.wall = w; else delete document.documentElement.dataset.wall;
+    document.querySelectorAll(".walls button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.w === w))); store.set("cam-wall", w || null); };
+  document.querySelectorAll(".walls button").forEach(b => b.addEventListener("click", () => setWall(b.dataset.w)));
+  setWall(store.get("cam-wall", null));
+
+  /* Accueil : index des séries */
+  $("#rows").innerHTML = SERIES.map((s, i) => { const c = byId[s.imgs[s.id === "verticales" ? 7 : 0][0]]; return `
+    <a class="salle" href="#${s.id}">
+      <span class="ph"><img class="dev" loading="lazy" src="img/l/${c.id}.webp" width="${c.w}" height="${c.h}" alt="${c.alt}"></span>
+      <span class="tx">
+        <span class="num mono">Série ${ROMAN[i]} · ${pad(s.imgs.length)} ${s.imgs.length > 1 ? "images" : "image"}</span>
+        <span class="name">${s.name}</span>
+        <span class="desc">${s.desc}</span>
+        <span class="go mono">Découvrir</span>
+      </span>
+    </a>`; }).join("");
+  develop($("#rows"));
+
+  document.documentElement.dataset.font = "poiret";
+
+  /* Vue série */
+  let hang = store.get("cam-hang", "cimaise");
+  const renderSerie = s => {
+    const i = SERIES.indexOf(s), nx = SERIES[(i + 1) % SERIES.length];
+    const v = $("#v-serie");
+    const head = `<div class="s-head wrap"><div><h1><small>Série ${ROMAN[i]} · ${pad(s.imgs.length)} images</small>${s.name}</h1><p>${s.desc}</p></div>
+      ${s.trip ? "" : `<div class="hang mono" role="group" aria-label="Accrochage"><button type="button" data-h="cimaise" aria-pressed="${hang === "cimaise"}">Cimaise</button><button type="button" data-h="grille" aria-pressed="${hang === "grille"}">Grille</button></div>`}</div>`;
+    const pics = s.imgs.map(([id]) => byId[id]);
+    const cap = p => `<figcaption class="cartel mono"><span><b>N° ${pad(p.n)}</b></span></figcaption>`;
+    let body;
+    if (s.trip) body = `<div class="trips wrap">${pics.map(p => `<figure>${devImg(p, "l")}${cap(p)}</figure>`).join("")}</div>`;
+    else if (hang === "grille") body = `<div class="grid wrap">${pics.map(p => `<figure>${devImg(p, "l")}${cap(p)}</figure>`).join("")}</div>`;
+    else body = `<div class="rail" id="rail">${pics.map(p => `<figure class="${p.w / p.h > 1.6 ? "wide" : ""}">${devImg(p, "l")}${cap(p)}</figure>`).join("")}
+      <div class="end"><a class="next" href="#${nx.id}"><span class="mono">Série suivante</span><span class="n">${nx.name} →</span></a></div></div>
+      <div class="railbar wrap mono"><span id="railN">01 / ${pad(pics.length)}</span><span class="track"><i id="railT"></i></span><span>Molette ou glisser →</span></div>`;
+    const tail = hang === "grille" || s.trip ? `<div class="wrap"><a class="next" href="#${nx.id}"><span class="mono">Série suivante</span><span class="n">${nx.name} →</span></a></div>` : "";
+    v.innerHTML = head + body + tail;
+    develop(v);
+    v.querySelectorAll(".hang button").forEach(b => b.addEventListener("click", () => { hang = b.dataset.h; store.set("cam-hang", hang); renderSerie(s); }));
+    const rail = $("#rail");
+    if (rail) {
+      rail.addEventListener("wheel", e => {
+        if (matchMedia("(max-width: 760px)").matches || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+        const max = rail.scrollWidth - rail.clientWidth;
+        if ((e.deltaY > 0 && rail.scrollLeft < max - 1) || (e.deltaY < 0 && rail.scrollLeft > 0)) { e.preventDefault(); rail.scrollLeft += e.deltaY; }
+      }, { passive: false });
+      const figs = [...rail.querySelectorAll("figure")];
+      rail.addEventListener("scroll", () => {
+        const max = rail.scrollWidth - rail.clientWidth || 1; $("#railT").style.width = (rail.scrollLeft / max * 100) + "%";
+        const mid = rail.scrollLeft + rail.clientWidth / 2; let k = 0;
+        figs.forEach((f, j) => { if (f.offsetLeft <= mid) k = j; }); $("#railN").textContent = `${pad(k + 1)} / ${pad(figs.length)}`;
+      }, { passive: true });
+    }
+  };
+
+  /* Planche-contact */
+  let chosen = new Set(store.get("cam-sel", []));
+  const circlePath = () => { const r = () => (Math.random() - .5) * 6; return `M ${12 + r()} ${48 + r()} C ${10 + r()} ${8 + r()}, ${88 + r()} ${2 + r()}, ${92 + r()} ${46 + r()} S ${30 + r()} ${100 + r()}, ${9 + r()} ${55 + r()} Q ${14 + r()} ${30 + r()}, ${40 + r()} ${16 + r()}`; };
+  const renderSheet = () => {
+    const per = 6, rows = [];
+    for (let i = 0; i < ALL.length; i += per) rows.push(ALL.slice(i, i + per));
+    $("#sheet").innerHTML = rows.map(r => `<div class="strip35">${r.map(p => `
+      <div class="frame${chosen.has(p.id) ? " chosen" : ""}" data-id="${p.id}">
+        <span class="edge">${p.n} ▸ ${p.n}A</span>
+        <button class="pic" type="button" data-open="${p.id}" aria-label="Agrandir la vue N° ${pad(p.n)}"><img loading="lazy" src="img/s/${p.id}.webp" alt="${p.alt}"></button>
+        <svg class="circle" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="${circlePath()}"/></svg>
+        <button class="pick" type="button" aria-pressed="${chosen.has(p.id)}">${chosen.has(p.id) ? "Retenue" : "Entourer"}</button>
+      </div>`).join("")}</div>`).join("");
+    updateSel();
+  };
+  const updateSel = () => { const n = chosen.size; $("#selCount").textContent = `${n} retenue${n > 1 ? "s" : ""}`; store.set("cam-sel", [...chosen]); };
+  $("#sheet").addEventListener("click", e => {
+    const b = e.target.closest(".pick"); if (!b) return;
+    const f = b.closest(".frame"), id = f.dataset.id;
+    if (chosen.has(id)) chosen.delete(id); else { chosen.add(id); f.querySelector("path").setAttribute("d", circlePath()); }
+    f.classList.toggle("chosen", chosen.has(id)); b.setAttribute("aria-pressed", String(chosen.has(id))); b.textContent = chosen.has(id) ? "Retenue" : "Entourer"; updateSel();
+  });
+  $("#selOnly").addEventListener("click", e => { const on = e.currentTarget.getAttribute("aria-pressed") !== "true"; e.currentTarget.setAttribute("aria-pressed", String(on)); $("#sheet").classList.toggle("only", on); });
+  $("#selClear").addEventListener("click", () => { chosen.clear(); renderSheet(); });
+
+  /* Visionneuse */
+  const lb = $("#lb"), lbImg = $("#lbImg");
+  let list = ALL, idx = 0, quietT, lastFocus;
+  const show = k => {
+    idx = (k + list.length) % list.length; const p = list[idx];
+    lbImg.classList.remove("ok"); lbImg.className = "dev"; lbImg.src = `img/l/${p.id}.webp`; lbImg.alt = p.alt; develop(lb);
+    $("#lbCount").textContent = `${pad(idx + 1)} / ${pad(list.length)}`;
+    $("#lbCartel").innerHTML = `<b>N° ${pad(p.n)}</b> · ${p.s.name}`;
+    [1, -1].forEach(d => { const q = list[(idx + d + list.length) % list.length]; new Image().src = `img/l/${q.id}.webp`; });
+  };
+  const open = id => {
+    const p = byId[id]; const inSerie = location.hash.slice(1) === p.s.id;
+    list = inSerie ? ALL.filter(q => q.s === p.s) : ALL; lastFocus = document.activeElement;
+    lb.hidden = false; document.body.style.overflow = "hidden"; show(list.indexOf(p)); $("#lbClose").focus(); wake();
+  };
+  const close = () => { lb.hidden = true; document.body.style.overflow = ""; if (document.fullscreenElement) document.exitFullscreen().catch(() => {}); lastFocus && lastFocus.focus(); };
+  const wake = () => { lb.classList.remove("quiet"); clearTimeout(quietT); quietT = setTimeout(() => lb.classList.add("quiet"), 2600); };
+  document.addEventListener("click", e => { const t = e.target.closest("[data-open]"); if (t && !e.target.closest(".pick")) open(t.dataset.open); });
+  $("#lbClose").addEventListener("click", close);
+  lb.querySelector(".hit.p").addEventListener("click", () => show(idx - 1));
+  lb.querySelector(".hit.n").addEventListener("click", () => show(idx + 1));
+  lb.addEventListener("mousemove", wake);
+  document.addEventListener("keydown", e => {
+    if (lb.hidden) return;
+    if (e.key === "Escape") close();
+    else if (e.key === "ArrowRight") show(idx + 1);
+    else if (e.key === "ArrowLeft") show(idx - 1);
+    else if (["1", "2", "3"].includes(e.key)) setWall(["noir", "gris", "blanc"][+e.key - 1]);
+    else if (e.key.toLowerCase() === "f") { (document.fullscreenElement ? document.exitFullscreen() : lb.requestFullscreen?.())?.catch?.(() => {}); }
+    else return;
+    wake();
+  });
+  let sx = null;
+  $("#lbStage").addEventListener("touchstart", e => { sx = e.touches[0].clientX; }, { passive: true });
+  $("#lbStage").addEventListener("touchend", e => { if (sx === null) return; const dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 40) show(idx + (dx < 0 ? 1 : -1)); sx = null; });
+
+  /* Protection : clic droit et glisser désactivés sur les images */
+  document.addEventListener("contextmenu", e => { if (e.target.closest("img, .pic, .lb-stage")) e.preventDefault(); });
+  document.addEventListener("dragstart", e => { if (e.target.tagName === "IMG") e.preventDefault(); });
+
+  /* Routage */
+  const route = () => {
+    const h = location.hash.slice(1) || "accueil", s = SERIES.find(x => x.id === h);
+    const view = s ? "serie" : (["accueil", "planche", "apropos"].includes(h) ? h : "accueil");
+    if (!lb.hidden) close();
+    document.querySelectorAll(".view").forEach(v => v.classList.toggle("on", v.id === "v-" + view));
+    document.querySelectorAll("[data-nav]").forEach(a => a.toggleAttribute("aria-current", a.dataset.nav === view || (view === "serie" && a.dataset.nav === "accueil")));
+    document.querySelectorAll("[data-nav][aria-current]").forEach(a => a.setAttribute("aria-current", "page"));
+    if (s) renderSerie(s);
+    if (view === "planche") renderSheet();
+    develop(document);
+    window.scrollTo({ top: 0, behavior: "instant" });
+  };
+  addEventListener("hashchange", route);
+  route();
+})();
+</script>
+</body>
+</html>
